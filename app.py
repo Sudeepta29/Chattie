@@ -40,7 +40,7 @@ st.markdown(
 )
 # Display the image using st.image() wrapped in a div for centering
 st.markdown('<div class="centered">', unsafe_allow_html=True)
-st.image("/Users/sudeeptasahu/Desktop/Chattie/Chattie image.png", width=70)  # Adjust the path and width as needed
+st.image("Chattie image.png", width=70)  # Adjust the path and width as needed
 st.markdown('</div>', unsafe_allow_html=True)
 
 
