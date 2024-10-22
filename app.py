@@ -57,7 +57,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-pdf_path = r"/Users/sudeeptasahu/Desktop/Chattie/Training_Chattie_responses.pdf"
+pdf_path = "Training_Chattie_responses.pdf"
 
 pdf_text = extract_text_from_pdf(pdf_path)
 
