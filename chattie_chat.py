@@ -4,8 +4,11 @@ import streamlit as st
 import difflib
 
 open_ai_key = st.secrets["open_ai_key"]
-client = OpenAI(api_key="open_ai_key")
+# Set the API key directly on the openai module
+openai.api_key = open_ai_key
 
+# Assign the openai module to a client instance for consistency
+client_instance = openai
 pdf_path = "Training_Chattie_responses.pdf"
 
 
