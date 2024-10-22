@@ -1,6 +1,6 @@
 
 import streamlit as st
-from chattie_chat import chat_with_chattie, extract_text_from_pdf
+import chattie_chat, extract_text_from_pdf
 
 
 # Inject custom CSS to reduce the title font size
