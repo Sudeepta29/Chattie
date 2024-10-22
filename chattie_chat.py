@@ -8,7 +8,7 @@ import difflib
 # Set the API key directly from Streamlit secrets
 openai.api_key = st.secrets["OPENAI_API_KEY"]
 
-pdf_path = r"/Users/sudeeptasahu/Desktop/Chattie/Training_Chattie_responses.pdf"
+pdf_path = Training_Chattie_responses.pdf
 
 
 # Function to extract text from PDF
