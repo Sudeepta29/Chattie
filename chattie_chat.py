@@ -15,7 +15,8 @@ pdf_path = "Training_Chattie_responses.pdf"
 def extract_text_from_pdf(pdf_path):
     # Function implementation
     pass
-    with pdfplumber.open(pdf_path) as pdf:
+    text = ""  # Initialize the text variable as an empty string
+    with pdfplumber.open(file) as pdf:
         for page_num, page in enumerate(pdf.pages, start=1):
             page_text = page.extract_text()
             if page_text:
