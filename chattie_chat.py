@@ -5,8 +5,9 @@ import difflib
 
 
 
-# Set the API key directly from Streamlit secrets
-openai.api_key = st.secrets["OPENAI_API_KEY"]
+open_ai_key = st.secrets["open_ai_key"]["key"]
+
+client = OpenAI(api_key=open_ai_key)
 
 pdf_path = "Training_Chattie_responses.pdf"
 
@@ -54,7 +55,7 @@ def extract_relevant_text(user_input, pdf_text, lines_to_extract=15):
     return None  # Return None if no partial match is found
 
 # Function to get a response from OpenAI if PDF search fails
-def get_chattie_response(user_input, user_context):
+def get_chattie_response(user_input, user_context,client_instance):
     
     # Create a personalized system prompt based on user context
     system_prompt = (
@@ -73,11 +74,11 @@ def get_chattie_response(user_input, user_context):
         system_prompt += "The user is not currently thinking about starting a business."
 
     try:
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",  # Example model; adjust as necessary
+        response = client_instance.chat.completions.create(
+            model="gpt-4",  # You can use "gpt-3.5-turbo" if required
             messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_input},
+                {"role": "system", "content": system_prompt},  # Provide user context
+                {"role": "user", "content": user_input},       # The user's query
             ]
         )
 
