@@ -5,8 +5,11 @@ import difflib
 
 
 
-# Initialize the OpenAI client using the API key (stored in an environment variable or directly)
-client = openai.OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+# Set the OpenAI API key using Streamlit secrets
+openai.api_key = st.secrets["OPENAI_API_KEY"]
+
+# Assign the OpenAI API to a client_instance for consistency
+client_instance = openai
 
 pdf_path = r"/Users/sudeeptasahu/Desktop/Chattie/Training_Chattie_responses.pdf"
 
