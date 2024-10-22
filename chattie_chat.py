@@ -114,7 +114,7 @@ def chat_with_chattie(pdf_text):
             response = pdf_response
         else:
             # Pass the user context (st.session_state.context) to get a personalized response from OpenAI
-            response = get_chattie_response(user_input, st.session_state.context, client)
+            response = get_chattie_response(user_input, st.session_state.context)
 
         st.session_state.chat_history.append({"chattie": response})
 
