@@ -1,4 +1,4 @@
-from openai import OpenAI
+import openai
 import pdfplumber
 import streamlit as st
 import difflib
