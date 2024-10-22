@@ -1,4 +1,4 @@
-import openai
+from openai import OpenAI
 import pdfplumber
 import streamlit as st
 import difflib
@@ -6,7 +6,7 @@ import difflib
 
 
 # Initialize the OpenAI client using the API key (stored in an environment variable or directly)
-client = OpenAI(api_key="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")
+client = OpenAI(api_key="")
 
 pdf_path = r"/Users/sudeeptasahu/Desktop/Chattie/Training_Chattie_responses.pdf"
 
