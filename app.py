@@ -149,17 +149,17 @@ def user_context_questions():
 
             if st.session_state.context.get('looking_to_start') == "Yes":
                 # Define risk appetite levels with descriptions
-                risk_appetite_options = {
+                risk_tolerance_options = {
                     "Low": "Prefers minimal risk, low investment, not willing to spend too much time or resources.",
                     "Medium": "Willing to take some risks, can invest time, money, and resources.",
                     "High": "Comfortable with high risk, willing to invest heavily and explore it full time."
                 }
 
                 # Ensure the key for risk appetite is unique by appending the step number
-                st.session_state.context['risk_appetite'] = st.selectbox(
-                    "What's your risk appetite in starting up?",
-                    options=list(risk_appetite_options.keys()),
-                    format_func=lambda x: f"{x}: {risk_appetite_options[x]}",
+                st.session_state.context['risk_tolerance'] = st.selectbox(
+                    "What's your risk tolerance in starting up?",
+                    options=list(risk_tolerance_options.keys()),
+                    format_func=lambda x: f"{x}: {risk_tolerance_options[x]}",
                     key=f"risk_appetite_{st.session_state.step}"  # Unique key for the widget
                 )
 
