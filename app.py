@@ -155,12 +155,12 @@ def user_context_questions():
                     "High": "Comfortable with high risk, willing to invest heavily and explore it full time."
                 }
 
-                # Ensure the key for risk appetite is unique by appending the step number
+                # Ensure the key for risk tolerance is unique by appending the step number
                 st.session_state.context['risk_tolerance'] = st.selectbox(
                     "What's your risk tolerance in starting up?",
                     options=list(risk_tolerance_options.keys()),
                     format_func=lambda x: f"{x}: {risk_tolerance_options[x]}",
-                    key=f"risk_appetite_{st.session_state.step}"  # Unique key for the widget
+                    key=f"risk_tolerance_{st.session_state.step}"  # Unique key for the widget
                 )
 
             elif st.session_state.context.get('looking_to_start') == "No":
@@ -201,8 +201,8 @@ def user_context_questions():
         elif background == "Working for a startup or small company" or background == "Working for a mid or large size company":
             looking_to_start = st.session_state.context.get('looking_to_start', 'unspecified')
             if looking_to_start == "Yes":
-                risk_appetite = st.session_state.context.get('risk_tolerance', 'unspecified')
-                summary_message += f" You are looking to start up, and your risk appetite is {risk_appetite.lower()}."
+                risk_tolerance = st.session_state.context.get('risk_tolerance', 'unspecified')
+                summary_message += f" You are looking to start up, and your risk tolerance is {risk_tolerance.lower()}."
             else:
                 reason = st.session_state.context.get('reason', 'unspecified')
                 summary_message += f" You're not looking to start up, and you're here because: {reason.lower()}."
