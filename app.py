@@ -148,7 +148,7 @@ def user_context_questions():
             )
 
             if st.session_state.context.get('looking_to_start') == "Yes":
-                # Define risk appetite levels with descriptions
+                # Define risk tolerance levels with descriptions
                 risk_tolerance_options = {
                     "Low": "Prefers minimal risk, low investment, not willing to spend too much time or resources.",
                     "Medium": "Willing to take some risks, can invest time, money, and resources.",
@@ -201,7 +201,7 @@ def user_context_questions():
         elif background == "Working for a startup or small company" or background == "Working for a mid or large size company":
             looking_to_start = st.session_state.context.get('looking_to_start', 'unspecified')
             if looking_to_start == "Yes":
-                risk_appetite = st.session_state.context.get('risk_appetite', 'unspecified')
+                risk_appetite = st.session_state.context.get('risk_tolerance', 'unspecified')
                 summary_message += f" You are looking to start up, and your risk appetite is {risk_appetite.lower()}."
             else:
                 reason = st.session_state.context.get('reason', 'unspecified')
