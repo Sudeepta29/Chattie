@@ -10,7 +10,7 @@ Chattie is an interactive chatbot application built using Streamlit that leverag
 ## Access the App
 You can access and interact with Chattie directly via the deployed app link below:
 
-[**Access Chattie**]([your-deployed-app-link](https://chattie-startupguide.streamlit.app/))
+(https://chattie-startupguide.streamlit.app/))
 
 Simply click the link and start interacting with Chattie by entering your details and asking questions.
 
