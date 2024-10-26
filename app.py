@@ -106,7 +106,7 @@ def user_context_questions():
         # Step 3: Ask the user's professional background
         st.session_state.context['background'] = st.selectbox(
             "What's your current professional background?", 
-            ["Working for a startup or small company", "Working for a mid or large size company", "Running own startup or business", "Tinkering with ideas Or on a break/ exploration phase"],
+            ["Working for a startup or small company", "Working for a mid or large size company","Tinkering with ideas Or on a break/ exploration phase"],
             key="professional_background"
         )
         col1, col2 = st.columns([1, 1])
@@ -121,23 +121,6 @@ def user_context_questions():
         # Step 4: Handle different paths based on user background and age range
         background = st.session_state.context['background']
         age_range = st.session_state.context['age_range']
-        
-        if background == "Running own startup or business":
-            # Logic for startup founders (bootstrapped or funded)
-            st.session_state.context['funding_status'] = st.selectbox("Is your startup bootstrapped or funded?", ["Bootstrapped", "Funded"], key="funding_status")
-            
-            if st.session_state.context['funding_status'] == "Funded":
-                st.session_state.context['funded_advice'] = st.selectbox(
-                    "What advice are you looking for from Chattie?",
-                    ["Raising your next round", "Not achieved product market fit", "People challenges", "General"],
-                    key="funded_advice"
-                )
-            else:
-                st.session_state.context['advice'] = st.selectbox(
-                    "What advice are you looking for from Chattie?",
-                    ["Cashflow management", "How to raise funds", "Pitch decks", "People management"],
-                    key="specific_advice"
-                )
 
         elif background == "Working for a startup or small company" or background == "Working for a mid or large size company":
             # Logic for users working in a company based on size
