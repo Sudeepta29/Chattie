@@ -129,7 +129,7 @@ def user_context_questions():
             else:
                 st.session_state.context['reason'] = st.text_input("What brings you here?", key="reason")
 
-            elif background == "Tinkering with ideas or on a break/exploration phase":
+        elif background == "Tinkering with ideas or on a break/exploration phase":
                 st.write("What are you thinking about? Do you have an idea or specific area you'd like to work upon?")
                 tinkering_idea = st.text_input("Please describe your idea or concept:", key="tinkering_idea")
                 st.session_state.context['tinkering_idea'] = tinkering_idea
