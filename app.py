@@ -129,12 +129,14 @@ def user_context_questions():
                     format_func=lambda x: f"{x}: {risk_tolerance_options[x]}",
                     key=f"risk_tolerance_{st.session_state.step}"
                 )
-           # Follow-up based on risk tolerance
+                 # Actions based on risk tolerance level
                 if st.session_state.context['risk_tolerance'] in ["Low", "Medium"]:
-                    st.write("Since you have indicated your risk tolerance as low/medium, would you like to know more about aspects such as angel investing or exploring an idea on the side before plunging into starting up full time?")
-                
+                    st.write("Since you have indicated your risk tolerance as low/medium, you might benefit from learning about angel investing or exploring an idea on the side before committing fully.")
+                    if st.button("Start chatting with Chattie"):
+                        st.session_state.step += 1
+
                 elif st.session_state.context['risk_tolerance'] == "High":
-                    st.write("Since you have indicated a high risk tolerance, which area are you keen on starting up?")
+                    st.write("Since you have indicated that you are willing to take a high risk, which area are you keen on starting up?")
                     startup_area = st.text_input("Please type in the area you are interested in:", key="startup_area")
                     
                     if startup_area:
@@ -144,29 +146,25 @@ def user_context_questions():
                             ["Have a solid idea", "Have an MVP", "Setting up a company", "Looking for co-founders"],
                             key="startup_phase"
                         )
-                        # Only set `startup_phase` in the session state if the user has selected an option
-                        if startup_phase:
-                            st.session_state.context['startup_phase'] = startup_phase
+                        st.session_state.context['startup_phase'] = startup_phase
 
-                            # Display full summary immediately
-                            address = st.session_state.context.get('address', 'there')
-                            age_range = st.session_state.context.get('age_range', 'unknown')
-                            background = st.session_state.context.get('background', 'unspecified')
-                            risk_tolerance = st.session_state.context.get('risk_tolerance', 'unspecified')
+                        # Display summary and allow user to start chat
+                        summary_message = (
+                            f"Hey {st.session_state.context['address']}, you mentioned that you're working in a {background} "
+                            f"and are willing to start up with a higher risk tolerance level. You are interested in the area of {startup_area} "
+                            f"and are currently in the {startup_phase} phase."
+                        )
+                        st.markdown(summary_message)
+                        
+                        # Button to start chat and pass summary to OpenAI
+                        if st.button("Start chatting with Chattie"):
+                            st.session_state.step += 1
 
-                            # Construct the summary message
-                            summary_message = f"Hey {address}, you mentioned that you're in the age range {age_range} and your background is {background}."
-        
-                            # Add the details about startup interest and risk tolerance
-                            summary_message += f" You are looking to start up with a risk tolerance of {risk_tolerance.lower()}."
-
-                            # Include startup area and phase if available
-                            startup_area = st.session_state.context.get('startup_area', 'an unspecified area')
-                            startup_phase = st.session_state.context.get('startup_phase', 'an unspecified phase')
-                            summary_message += f" You are interested in the area of {startup_area} and are currently in the {startup_phase} phase."
-
-                            # Display the summary
-                            st.markdown(summary_message)
+            else:
+                st.session_state.context['reason'] = st.text_input("What brings you here?", key="reason")
+                if st.button("Start chatting with Chattie"):
+                    st.session_state.step += 1           
+                           
             else:
                 st.session_state.context['reason'] = st.text_input("What brings you here?", key="reason")
 
