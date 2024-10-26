@@ -120,7 +120,7 @@ def user_context_questions():
                     "Medium": "Willing to take some risks, can invest time and resources.",
                     "High": "Comfortable with high risk, willing to invest heavily."
                 }
-               st.session_state.context['risk_tolerance'] = st.selectbox(
+                st.session_state.context['risk_tolerance'] = st.selectbox(
                     "What's your risk tolerance in starting up?",
                     options=list(risk_tolerance_options.keys()),
                     format_func=lambda x: f"{x}: {risk_tolerance_options[x]}",
