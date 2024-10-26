@@ -215,10 +215,10 @@ def user_context_questions():
             looking_to_start = st.session_state.context.get('looking_to_start', 'unspecified')
             if looking_to_start == "Yes":
                 risk_tolerance = st.session_state.context.get('risk_tolerance', 'unspecified')
-                summary_message += f" You are looking to start up, and your risk tolerance is {risk_tolerance.lower()}."
+                summary_message += f"So are looking to start up, and your risk tolerance is {risk_tolerance.lower()}."
             else:
                 reason = st.session_state.context.get('reason', 'unspecified')
-                summary_message += f" You're not looking to start up, and you're here because: {reason.lower()}."
+                summary_message += f" So you are not looking to start up, what brings you here today: {reason.lower()}."
 
         elif background == "Tinkering with ideas Or on a break/ exploration phase":
             beginner_questions = st.session_state.context.get('beginner_questions', 'unspecified')
