@@ -141,9 +141,9 @@ def user_context_questions():
         st.write("Since you have indicated a high risk tolerance, which area are you keen on starting up?")
         startup_area = st.text_input("Please type in the area you are interested in:")
     
-    if startup_area:
-        st.session_state.context['startup_area'] = startup_area
-        startup_phase = st.selectbox(
+        if startup_area:
+            st.session_state.context['startup_area'] = startup_area
+            startup_phase = st.selectbox(
             "Which phase of starting up are you in?", 
             ["Have a solid idea", "Have an MVP", "Setting up a company", "Looking for co-founders"]
         )
