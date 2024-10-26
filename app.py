@@ -165,7 +165,7 @@ def user_context_questions():
     elif st.session_state.context.get('looking_to_start') == "No":
         st.session_state.context['reason'] = st.text_input("What brings you here?", key="reason_1")
 
-elif background == "Tinkering with ideas Or on a break/ exploration phase"
+elif background == "Tinkering with ideas Or on a break/ exploration phase:"
     st.write("What are you thinking about? Do you have an idea or a concept or specific area you would like to work upon?")
     tinkering_idea = st.text_input("Please describe your idea or concept:")
     
