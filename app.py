@@ -138,8 +138,8 @@ def user_context_questions():
             st.session_state.step += 1
 
     elif st.session_state.context['risk_tolerance'] == "High":
-    st.write("Since you have indicated a high risk tolerance, which area are you keen on starting up?")
-    startup_area = st.text_input("Please type in the area you are interested in:")
+        st.write("Since you have indicated a high risk tolerance, which area are you keen on starting up?")
+        startup_area = st.text_input("Please type in the area you are interested in:")
     
     if startup_area:
         st.session_state.context['startup_area'] = startup_area
