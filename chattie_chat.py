@@ -96,7 +96,6 @@ elif user_context.get('background') == "Tinkering with ideas or on a break/explo
                 {"role": "user", "content": user_input},       # The user's query
             ]
         )
-
         return response.choices[0].message.content
 
 
