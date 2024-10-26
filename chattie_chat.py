@@ -106,7 +106,7 @@ try:
 
   
 # Main Chat Section
-def chat_with_chattie(pdf_text):
+def chat_with_chattie(pdf_path):
     
     user_input = st.text_input("Ask Chattie here..")
     col1, col2, col3 = st.columns(3)
