@@ -123,35 +123,37 @@ def user_context_questions():
         age_range = st.session_state.context['age_range']
 
     elif background == "Working for a startup or small company" or background == "Working for a mid or large size company":
-            # Logic for users working in a company based on size
-            st.session_state.context['looking_to_start'] = st.selectbox(
-                "Are you looking to start up?",
-                ["Yes", "No"],
-                key="looking_to_start"
-            )
+    # Logic for users working in a company based on size
+    st.session_state.context['looking_to_start'] = st.selectbox(
+        "Are you looking to start up?",
+        ["Yes", "No"],
+        key="looking_to_start"
+    )
 
-            if st.session_state.context.get('looking_to_start') == "Yes":
-                # Define risk tolerance levels with descriptions
-                risk_tolerance_options = {
-                    "Low": "Prefers minimal risk, low investment, not willing to spend too much time or resources.",
-                    "Medium": "Willing to take some risks, can invest time, money, and resources.",
-                    "High": "Comfortable with high risk, willing to invest heavily and explore it full time."
-                }
+    if st.session_state.context.get('looking_to_start') == "Yes":
+        # Define risk tolerance levels with descriptions
+        risk_tolerance_options = {
+            "Low": "Prefers minimal risk, low investment, not willing to spend too much time or resources.",
+            "Medium": "Willing to take some risks, can invest time, money, and resources.",
+            "High": "Comfortable with high risk, willing to invest heavily and explore it full time."
+        }
 
-                # Ensure the key for risk tolerance is unique by appending the step number
-                st.session_state.context['risk_tolerance'] = st.selectbox(
-                    "What's your risk tolerance in starting up?",
-                    options=list(risk_tolerance_options.keys()),
-                    format_func=lambda x: f"{x}: {risk_tolerance_options[x]}",
-                    key=f"risk_tolerance_{st.session_state.step}"  # Unique key for the widget
-                )
- # New follow-up logic based on risk tolerance
-           if st.session_state.context['risk_tolerance'] in ["Low", "Medium"]:
+        # Ensure the key for risk tolerance is unique by appending the step number
+        st.session_state.context['risk_tolerance'] = st.selectbox(
+            "What's your risk tolerance in starting up?",
+            options=list(risk_tolerance_options.keys()),
+            format_func=lambda x: f"{x}: {risk_tolerance_options[x]}",
+            key=f"risk_tolerance_{st.session_state.step}"  # Unique key for the widget
+        )
+
+        # New follow-up logic based on risk tolerance
+        if st.session_state.context['risk_tolerance'] in ["Low", "Medium"]:
             st.write("Since you have indicated your risk tolerance as low/medium, would you like to know more about aspects such as angel investing or exploring an idea on the side before plunging into starting up full time?")
         
-           elif st.session_state.context['risk_tolerance'] == "High":
+        elif st.session_state.context['risk_tolerance'] == "High":
             st.write("Since you have indicated a high risk tolerance, which area are you keen on starting up?")
             startup_area = st.text_input("Please type in the area you are interested in:")
+            
             if startup_area:
                 st.session_state.context['startup_area'] = startup_area
                 startup_phase = st.selectbox(
@@ -159,23 +161,24 @@ def user_context_questions():
                     ["Have a solid idea", "Have an MVP", "Setting up a company", "Looking for co-founders"]
                 )
                 st.session_state.context['startup_phase'] = startup_phase
-            elif st.session_state.context.get('looking_to_start') == "No":
-                st.session_state.context['reason'] = st.text_input("What brings you here?", key="reason_1")
-        
-       elif background == "Tinkering with ideas Or on a break/ exploration phase":
-           st.write("What are you thinking about? Do you have an idea or a concept or specific area you would like to work upon?")
-           tinkering_idea = st.text_input("Please describe your idea or concept:")
+
+    elif st.session_state.context.get('looking_to_start') == "No":
+        st.session_state.context['reason'] = st.text_input("What brings you here?", key="reason_1")
+
+elif background == "Tinkering with ideas Or on a break/ exploration phase":
+    st.write("What are you thinking about? Do you have an idea or a concept or specific area you would like to work upon?")
+    tinkering_idea = st.text_input("Please describe your idea or concept:")
     
-           if tinkering_idea:
-               st.session_state.context['tinkering_idea'] = tinkering_idea
-               
-        col1, col2 = st.columns([1, 1])
-        with col2:  # 'Back' in the second column
-            if st.button("Back", key="back_3"):
-                st.session_state.step -= 1
-        with col1:  # 'Next' in the first column
-            if st.button("Next", key="next_4"):
-                st.session_state.step += 1
+    if tinkering_idea:
+        st.session_state.context['tinkering_idea'] = tinkering_idea
+
+col1, col2 = st.columns([1, 1])
+with col2:  # 'Back' in the second column
+    if st.button("Back", key="back_3"):
+        st.session_state.step -= 1
+with col1:  # 'Next' in the first column
+    if st.button("Next", key="next_4"):
+        st.session_state.step += 1
 
     elif st.session_state.step == 4:
         # Final step: Confirm all information before starting the chat
