@@ -88,7 +88,7 @@ def get_chattie_response(user_input, user_context, client_instance):
         system_prompt += f" They are exploring ideas and have described their concept as: {tinkering_idea}."
 
     try:
-     response = client_instance.chat.completions.create(
+        response = client_instance.chat.completions.create(
             model="gpt-4",  # You can use "gpt-3.5-turbo" if required
             messages=[
                 {"role": "system", "content": system_prompt},  # Provide user context
