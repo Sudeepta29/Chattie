@@ -83,10 +83,9 @@ st.markdown(
 def user_context_questions():
     # Step 1: Ask for the user's name
     if st.session_state.step == 0:
-        # Ask for the preferred name
         st.session_state.context['address'] = st.text_input("How would you like to be addressed by Chattie?", key="user_address")
         
-        # Only display the Next button if the user has entered their name
+        # Display Next button only if name is provided
         if st.session_state.context['address']:
             if st.button("Next", key="next_0"):
                 st.session_state.step += 1
@@ -97,7 +96,7 @@ def user_context_questions():
         if st.button("Next", key="next_1"):
             st.session_state.step += 1
 
-   # Step 3: Ask for professional background
+    # Step 3: Ask for professional background
     elif st.session_state.step == 2:
         st.session_state.context['background'] = st.selectbox(
             "What's your current professional background?", 
@@ -195,18 +194,6 @@ def user_context_questions():
         if st.button("Start chatting with Chattie"):
             st.session_state.step += 1
 
-col1, col2 = st.columns([1, 1])
-
-# Display Next button in Column 1
-with col1:
-    if st.button("Next", key=f"next_{st.session_state.step}"):
-        st.session_state.step += 1
-
-# Display Back button in Column 2 (only if not on the first step)
-with col2:
-    if st.session_state.step > 0:
-        if st.button("Back", key=f"back_{st.session_state.step}"):
-            st.session_state.step -= 1
 # Display the initial context questions if not completed
 if st.session_state.step < 5:
     user_context_questions()
