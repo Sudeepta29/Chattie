@@ -177,7 +177,7 @@ def user_context_questions():
                 reason = st.session_state.context.get('reason', 'unspecified')
                 summary_message += f" So you are not looking to start up, what brings you here today: {reason.lower()}."
 
-        elif background == "Tinkering with ideas Or on a break/ exploration phase":
+    elif background == "Tinkering with ideas Or on a break/ exploration phase":
             beginner_questions = st.session_state.context.get('beginner_questions', 'unspecified')
             summary_message += f" You're curious about {beginner_questions.lower()}."
 
