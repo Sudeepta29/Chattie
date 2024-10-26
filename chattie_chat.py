@@ -87,8 +87,8 @@ elif user_context.get('background') == "Tinkering with ideas or on a break/explo
     tinkering_idea = user_context.get('tinkering_idea', 'an unspecified concept')
     system_prompt += f" They are exploring ideas and have described their concept as: {tinkering_idea}."
 
-    try:
-        response = client_instance.chat.completions.create(
+try:
+     response = client_instance.chat.completions.create(
             model="gpt-4",  # You can use "gpt-3.5-turbo" if required
             messages=[
                 {"role": "system", "content": system_prompt},  # Provide user context
