@@ -97,7 +97,7 @@ try:
                 {"role": "user", "content": user_input},       # The user's query
             ]
         )
-        return response.choices[0].message.content
+    return response.choices[0].message.content
         
     except Exception as e:  # Correct error handling
         # Catch OpenAI-specific errors and display a detailed message
