@@ -129,6 +129,22 @@ def user_context_questions():
                     format_func=lambda x: f"{x}: {risk_tolerance_options[x]}",
                     key=f"risk_tolerance_{st.session_state.step}"
                 )
+           # Follow-up based on risk tolerance
+                if st.session_state.context['risk_tolerance'] in ["Low", "Medium"]:
+                    st.write("Since you have indicated your risk tolerance as low/medium, would you like to know more about aspects such as angel investing or exploring an idea on the side before plunging into starting up full time?")
+                
+                elif st.session_state.context['risk_tolerance'] == "High":
+                    st.write("Since you have indicated a high risk tolerance, which area are you keen on starting up?")
+                    startup_area = st.text_input("Please type in the area you are interested in:", key="startup_area")
+                    
+                    if startup_area:
+                        st.session_state.context['startup_area'] = startup_area
+                        startup_phase = st.selectbox(
+                            "Which phase of starting up are you in?", 
+                            ["Have a solid idea", "Have an MVP", "Setting up a company", "Looking for co-founders"],
+                            key="startup_phase"
+                        )
+                        st.session_state.context['startup_phase'] = startup_phase
             else:
                 st.session_state.context['reason'] = st.text_input("What brings you here?", key="reason")
 
