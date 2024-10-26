@@ -149,7 +149,7 @@ def user_context_questions():
         )
         st.session_state.context['startup_phase'] = startup_phase
 
-elif st.session_state.context.get('looking_to_start') == "No":
+    elif st.session_state.context.get('looking_to_start') == "No":
     st.session_state.context['reason'] = st.text_input("What brings you here?", key="reason_1")
 
         elif background == "Tinkering with ideas or on a break/exploration phase":
