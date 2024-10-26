@@ -83,9 +83,13 @@ st.markdown(
 def user_context_questions():
     # Step 1: Ask for the user's name
     if st.session_state.step == 0:
+        # Ask for the preferred name
         st.session_state.context['address'] = st.text_input("How would you like to be addressed by Chattie?", key="user_address")
-        if st.session_state.context['address'] and st.button("Next", key="next_0"):
-            st.session_state.step += 1
+        
+        # Only display the Next button if the user has entered their name
+        if st.session_state.context['address']:
+            if st.button("Next", key="next_0"):
+                st.session_state.step += 1
             
     # Step 2: Ask for the user's age range
     elif st.session_state.step == 1:
