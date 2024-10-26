@@ -164,9 +164,6 @@ def user_context_questions():
                 st.session_state.context['reason'] = st.text_input("What brings you here?", key="reason")
                 if st.button("Start chatting with Chattie"):
                     st.session_state.step += 1           
-                           
-            else:
-                st.session_state.context['reason'] = st.text_input("What brings you here?", key="reason")
 
         elif background == "Tinkering with ideas or on a break/exploration phase":
                 st.write("What are you thinking about? Do you have an idea or specific area you'd like to work upon?")
