@@ -160,29 +160,34 @@ def user_context_questions():
         if st.button("Next", key="next_4"):
             st.session_state.step += 1
 
+     # Final Step: Display summary before starting chat
     elif st.session_state.step == 4:
-        # Final step: Confirm all information before starting the chat
         address = st.session_state.context.get('address', 'there')
         age_range = st.session_state.context.get('age_range', 'unknown')
         background = st.session_state.context.get('background', 'unspecified')
 
-        summary_message = f"Hey {address}, you mentioned that you're currently {background}, in the age range {age_range}."
-
-    elif background == "Working for a startup or small company" or background == "Working for a mid or large size company":
+        # Construct summary message
+        summary_message = f"Hey {address}, you mentioned that you're in the age range {age_range} and your background is {background}."
+        
+        if background in ["Working for a startup or small company", "Working for a mid or large size company"]:
             looking_to_start = st.session_state.context.get('looking_to_start', 'unspecified')
             if looking_to_start == "Yes":
                 risk_tolerance = st.session_state.context.get('risk_tolerance', 'unspecified')
-                summary_message += f"So are looking to start up, and your risk tolerance is {risk_tolerance.lower()}."
+                summary_message += f" You are looking to start up, with a risk tolerance of {risk_tolerance.lower()}."
             else:
                 reason = st.session_state.context.get('reason', 'unspecified')
-                summary_message += f" So you are not looking to start up, what brings you here today: {reason.lower()}."
+                summary_message += f" You're here because: {reason.lower()}."
 
-    elif background == "Tinkering with ideas Or on a break/ exploration phase":
-            beginner_questions = st.session_state.context.get('beginner_questions', 'unspecified')
-            summary_message += f" You're curious about {beginner_questions.lower()}."
+        elif background == "Tinkering with ideas or on a break/exploration phase":
+            tinkering_idea = st.session_state.context.get('tinkering_idea', 'an unspecified concept')
+            summary_message += f" You're exploring ideas and described your concept as: {tinkering_idea}."
 
         # Display the summary
-    st.markdown(summary_message)
+        st.markdown(summary_message)
+
+        # Button to start chat
+        if st.button("Start chatting with Chattie"):
+            st.session_state.step += 1
 
 col1, col2 = st.columns([1, 1])
 
