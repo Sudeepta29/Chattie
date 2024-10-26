@@ -184,7 +184,7 @@ def user_context_questions():
         # Display the summary
     st.markdown(summary_message)
 
-  col1, col2 = st.columns([1, 1])
+col1, col2 = st.columns([1, 1])
 
 # Display Next button in Column 1
 with col1:
