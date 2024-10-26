@@ -55,14 +55,12 @@ def extract_relevant_text(user_input, pdf_text, lines_to_extract=15):
     return None  # Return None if no partial match is found
 
 # Function to get a response from OpenAI if PDF search fails
-# Function to get a response from OpenAI if PDF search fails
 def get_chattie_response(user_input, user_context, client_instance):
     # Base system prompt
     system_prompt = (
         f"The user is named {user_context.get('address', 'there')}, is in the age range {user_context.get('age_range', 'unknown')}, "
         f"and has a professional background in {user_context.get('background', 'an unspecified field')}."
     )
-    
     # Refined system prompt building logic for aspiring founders and explorers
     if user_context.get('background') == "Working for a startup or small company" and user_context.get('looking_to_start') == "Yes":
         # Check risk tolerance level and adjust prompt accordingly
@@ -103,10 +101,9 @@ def get_chattie_response(user_input, user_context, client_instance):
         # Catch OpenAI-specific errors and display a detailed message
         print(f"OpenAI Error: {str(e)}")
         return f"Error: {e}"
-
-  
+        
 # Main Chat Section
-def chat_with_chattie(pdf_path):
+def chat_with_chattie(pdf_text):
     
     user_input = st.text_input("Ask Chattie here..")
     col1, col2, col3 = st.columns(3)
