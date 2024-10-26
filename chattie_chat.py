@@ -63,10 +63,9 @@ def get_chattie_response(user_input, user_context,client_instance):
     )
     
     # Refined system prompt building logic for aspiring founders and explorers
-if user_context.get('background') == "Working for a startup or small company" and user_context.get('looking_to_start') == "Yes":
-    # Check risk tolerance level and adjust prompt accordingly
-    risk_tolerance = user_context.get('risk_tolerance', 'unspecified')
-    if risk_tolerance in ["Low", "Medium"]:
+    if user_context.get('background') == "Working for a startup or small company" and user_context.get('looking_to_start') == "Yes":
+        risk_tolerance = user_context.get('risk_tolerance', 'unspecified')
+        if risk_tolerance in ["Low", "Medium"]:
         system_prompt += " They are interested in starting up with a low or medium risk tolerance and might benefit from learning about angel investing or exploring ideas on the side."
     elif risk_tolerance == "High":
         startup_area = user_context.get('startup_area', 'an unspecified area')
@@ -97,8 +96,7 @@ elif user_context.get('background') == "Tinkering with ideas or on a break/explo
             ]
         )
         return response.choices[0].message.content
-
-
+        
     except Exception as e:  # Correct error handling
         # Catch OpenAI-specific errors and display a detailed message
         print(f"OpenAI Error: {str(e)}")
