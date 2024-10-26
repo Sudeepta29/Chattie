@@ -156,8 +156,8 @@ def user_context_questions():
         st.write("What are you thinking about? Do you have an idea or a concept or specific area you would like to work upon?")
         tinkering_idea = st.text_input("Please describe your idea or concept:")
             
-            if tinkering_idea:
-                st.session_state.context['tinkering_idea'] = tinkering_idea
+        if tinkering_idea:
+            st.session_state.context['tinkering_idea'] = tinkering_idea
 
         if st.button("Next", key="next_4"):
             st.session_state.step += 1
