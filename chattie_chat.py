@@ -97,7 +97,6 @@ elif user_context.get('background') == "Tinkering with ideas or on a break/explo
             ]
         )
 
-        # Access the response content correctly
         return response.choices[0].message.content
 
 
