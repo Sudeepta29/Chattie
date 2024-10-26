@@ -182,7 +182,7 @@ def user_context_questions():
             summary_message += f" You're curious about {beginner_questions.lower()}."
 
         # Display the summary
-        st.markdown(summary_message)
+    st.markdown(summary_message)
 
         col1, col2 = st.columns([1, 1])
         # Display Next button in Column 1
