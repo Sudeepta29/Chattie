@@ -168,15 +168,6 @@ def user_context_questions():
 
         summary_message = f"Hey {address}, you mentioned that you're currently {background}, in the age range {age_range}."
 
-        if background == "Running own startup or business":
-            funding_status = st.session_state.context.get('funding_status', 'unspecified')
-            if funding_status == "Funded":
-                funded_advice = st.session_state.context.get('funded_advice', 'general advice')
-                summary_message += f" Your startup is funded, and you're seeking advice on {funded_advice.lower()}."
-            else:
-                advice = st.session_state.context.get('advice', 'general advice')
-                summary_message += f" Your startup is bootstrapped, and you're seeking advice on {advice.lower()}."
-
         elif background == "Working for a startup or small company" or background == "Working for a mid or large size company":
             looking_to_start = st.session_state.context.get('looking_to_start', 'unspecified')
             if looking_to_start == "Yes":
@@ -194,13 +185,16 @@ def user_context_questions():
         st.markdown(summary_message)
 
         col1, col2 = st.columns([1, 1])
-        with col2:  # 'Back' in the second column
-            if st.button("Back", key="back_4"):
-                st.session_state.step -= 1
-        with col1:  # 'Start Chatting' in the first column
-            if st.button("Start chatting with Chattie"):
-                st.session_state.step += 1
+        # Display Next button in Column 1
+with col1:
+    if st.button("Next", key=f"next_{st.session_state.step}"):
+        st.session_state.step += 1
 
+# Display Back button in Column 2 (only if not on the first step)
+with col2:
+    if st.session_state.step > 0:
+        if st.button("Back", key=f"back_{st.session_state.step}"):
+            st.session_state.step -= 1
 # Display the initial context questions if not completed
 if st.session_state.step < 5:
     user_context_questions()
