@@ -168,7 +168,7 @@ def user_context_questions():
 
         summary_message = f"Hey {address}, you mentioned that you're currently {background}, in the age range {age_range}."
 
-        elif background == "Working for a startup or small company" or background == "Working for a mid or large size company":
+    elif background == "Working for a startup or small company" or background == "Working for a mid or large size company":
             looking_to_start = st.session_state.context.get('looking_to_start', 'unspecified')
             if looking_to_start == "Yes":
                 risk_tolerance = st.session_state.context.get('risk_tolerance', 'unspecified')
