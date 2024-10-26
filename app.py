@@ -138,19 +138,19 @@ def user_context_questions():
             st.session_state.step += 1
 
     elif st.session_state.context['risk_tolerance'] == "High":
-                    st.write("Since you have indicated a high risk tolerance, which area are you keen on starting up?")
-                    startup_area = st.text_input("Please type in the area you are interested in:")
-                    
-                    if startup_area:
-                        st.session_state.context['startup_area'] = startup_area
-                        startup_phase = st.selectbox(
-                            "Which phase of starting up are you in?", 
-                            ["Have a solid idea", "Have an MVP", "Setting up a company", "Looking for co-founders"]
-                        )
-                        st.session_state.context['startup_phase'] = startup_phase
+    st.write("Since you have indicated a high risk tolerance, which area are you keen on starting up?")
+    startup_area = st.text_input("Please type in the area you are interested in:")
+    
+    if startup_area:
+        st.session_state.context['startup_area'] = startup_area
+        startup_phase = st.selectbox(
+            "Which phase of starting up are you in?", 
+            ["Have a solid idea", "Have an MVP", "Setting up a company", "Looking for co-founders"]
+        )
+        st.session_state.context['startup_phase'] = startup_phase
 
-        elif st.session_state.context.get('looking_to_start') == "No":
-                st.session_state.context['reason'] = st.text_input("What brings you here?", key="reason_1")
+elif st.session_state.context.get('looking_to_start') == "No":
+    st.session_state.context['reason'] = st.text_input("What brings you here?", key="reason_1")
 
         elif background == "Tinkering with ideas or on a break/exploration phase":
             st.write("What are you thinking about? Do you have an idea or a concept or specific area you would like to work upon?")
