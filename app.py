@@ -148,15 +148,11 @@ def user_context_questions():
                         )
                         st.session_state.context['startup_phase'] = startup_phase
 
-                        # Display summary and allow user to start chat
-                        summary_message = (
-                            f"Hey {st.session_state.context['address']}, you mentioned that you're working in a {background} "
-                            f"and are willing to start up with a higher risk tolerance level. You are interested in the area of {startup_area} "
-                            f"and are currently in the {startup_phase} phase."
+                          # Final summary for high risk tolerance
+                        st.session_state.context['summary'] = (
+                            f"Hey {st.session_state.context['address']}, you mentioned that you're working in a {background} and are keen on starting up "
+                            f"with a high risk tolerance. You are interested in the area of {startup_area} and are currently in the {startup_phase} phase."
                         )
-                        st.markdown(summary_message)
-                        
-                        # Button to start chat and pass summary to OpenAI
                         if st.button("Start chatting with Chattie"):
                             st.session_state.step += 1
 
