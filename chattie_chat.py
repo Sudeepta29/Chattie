@@ -66,7 +66,7 @@ def get_chattie_response(user_input, user_context,client_instance):
     if user_context.get('background') == "Working for a startup or small company" and user_context.get('looking_to_start') == "Yes":
         risk_tolerance = user_context.get('risk_tolerance', 'unspecified')
         if risk_tolerance in ["Low", "Medium"]:
-        system_prompt += " They are interested in starting up with a low or medium risk tolerance and might benefit from learning about angel investing or exploring ideas on the side."
+         system_prompt += " They are interested in starting up with a low or medium risk tolerance and might benefit from learning about angel investing or exploring ideas on the side."
     elif risk_tolerance == "High":
         startup_area = user_context.get('startup_area', 'an unspecified area')
         startup_phase = user_context.get('startup_phase', 'an unspecified phase')
