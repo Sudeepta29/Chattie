@@ -122,7 +122,7 @@ def user_context_questions():
         background = st.session_state.context['background']
         age_range = st.session_state.context['age_range']
 
-        elif background == "Working for a startup or small company" or background == "Working for a mid or large size company":
+    elif background == "Working for a startup or small company" or background == "Working for a mid or large size company":
             # Logic for users working in a company based on size
             st.session_state.context['looking_to_start'] = st.selectbox(
                 "Are you looking to start up?",
