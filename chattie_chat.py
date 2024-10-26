@@ -72,7 +72,7 @@ def get_chattie_response(user_input, user_context,client_instance):
         startup_phase = user_context.get('startup_phase', 'an unspecified phase')
         system_prompt += f" They are interested in starting up in the area of {startup_area} and are currently in the {startup_phase} phase."
 
-elif user_context.get('background') == "Working for a mid or large size company" and user_context.get('looking_to_start') == "Yes":
+ elif user_context.get('background') == "Working for a mid or large size company" and user_context.get('looking_to_start') == "Yes":
     # Same handling for low/medium risk tolerance for mid/large company background
     risk_tolerance = user_context.get('risk_tolerance', 'unspecified')
     if risk_tolerance in ["Low", "Medium"]:
