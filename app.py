@@ -144,7 +144,29 @@ def user_context_questions():
                             ["Have a solid idea", "Have an MVP", "Setting up a company", "Looking for co-founders"],
                             key="startup_phase"
                         )
-                        st.session_state.context['startup_phase'] = startup_phase
+                        # Only set `startup_phase` in the session state if the user has selected an option
+                        if startup_phase:
+                            st.session_state.context['startup_phase'] = startup_phase
+
+                            # Display full summary immediately
+                            address = st.session_state.context.get('address', 'there')
+                            age_range = st.session_state.context.get('age_range', 'unknown')
+                            background = st.session_state.context.get('background', 'unspecified')
+                            risk_tolerance = st.session_state.context.get('risk_tolerance', 'unspecified')
+
+                            # Construct the summary message
+                            summary_message = f"Hey {address}, you mentioned that you're in the age range {age_range} and your background is {background}."
+        
+                            # Add the details about startup interest and risk tolerance
+                            summary_message += f" You are looking to start up with a risk tolerance of {risk_tolerance.lower()}."
+
+                            # Include startup area and phase if available
+                            startup_area = st.session_state.context.get('startup_area', 'an unspecified area')
+                            startup_phase = st.session_state.context.get('startup_phase', 'an unspecified phase')
+                            summary_message += f" You are interested in the area of {startup_area} and are currently in the {startup_phase} phase."
+
+                            # Display the summary
+                            st.markdown(summary_message)
             else:
                 st.session_state.context['reason'] = st.text_input("What brings you here?", key="reason")
 
