@@ -131,7 +131,7 @@ def user_context_questions():
                 )
                  # Actions based on risk tolerance level
                 if st.session_state.context['risk_tolerance'] in ["Low", "Medium"]:
-                    st.write("Since you have indicated your risk tolerance as low/medium, you might benefit from learning about angel investing or exploring an idea on the side before committing fully.")
+                    st.write("Since you have indicated your risk tolerance as low/medium,do you want to know about angel investing or exploring an idea on the side before committing fully?. Chat with Chattie to know more about these topics or ask something else")
                     if st.button("Start chatting with Chattie"):
                         st.session_state.step += 1
 
