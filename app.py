@@ -129,16 +129,18 @@ def user_context_questions():
                     format_func=lambda x: f"{x}: {risk_tolerance_options[x]}",
                     key=f"risk_tolerance_{st.session_state.step}"
                 )
-                 # Actions based on risk tolerance level
+                # Logic for low/medium vs. high risk tolerance
                 if st.session_state.context['risk_tolerance'] in ["Low", "Medium"]:
-                    st.write("Since you have indicated your risk tolerance as low/medium,do you want to know about angel investing or exploring an idea on the side before committing fully?. Chat with Chattie to know more about these topics or ask something else")
-                    if st.button("Start chatting with Chattie"):
-                        st.session_state.step += 1
-
-                elif st.session_state.context['risk_tolerance'] == "High":
-                    st.write("Since you have indicated that you are willing to take a high risk, have you already thought about which area you are keen on starting up?")
-                    startup_area = st.text_input("Please type in the area you are interested in:", key="startup_area")
+                    st.write("Since you have indicated a low/medium risk tolerance, would you like to learn more about aspects like angel investing or starting with a side hustle?")
+                    st.session_state.context['interest_type'] = st.selectbox(
+                        "Choose an option:",
+                        ["Angel investing", "Side hustle"],
+                        key="interest_type"
+                    )
                     
+                elif st.session_state.context['risk_tolerance'] == "High":
+                    # Follow-up questions for high risk tolerance
+                    startup_area = st.text_input("Which area are you interested in starting up?", key="startup_area")
                     if startup_area:
                         st.session_state.context['startup_area'] = startup_area
                         startup_phase = st.selectbox(
@@ -148,39 +150,59 @@ def user_context_questions():
                         )
                         st.session_state.context['startup_phase'] = startup_phase
 
-                       # Move to summary step after all information is gathered
-        if st.button("Next"):
-            st.session_state.step += 1
-
-    elif st.session_state.step == 4:
-        # Construct the full summary with all collected information
-        summary = (
-            f"Hey {st.session_state.context['address']}, you mentioned that you're in the age range {st.session_state.context.get('age_range')} and "
-            f"have a professional background in {st.session_state.context.get('background')}."
-        )
-        
-        if st.session_state.context.get('background') in ["Working for a startup or small company", "Working for a mid or large size company"]:
-            if st.session_state.context.get('looking_to_start') == "Yes":
-                risk_tolerance = st.session_state.context.get('risk_tolerance', 'unknown')
-                summary += f" You're looking to start up with a risk tolerance of {risk_tolerance}."
-                if risk_tolerance == "High":
-                    summary += f" Your area of interest is {st.session_state.context.get('startup_area')}, and you're in the {st.session_state.context.get('startup_phase')} phase."
             else:
-                summary += f" You're here because: {st.session_state.context.get('reason')}."
-        
-        elif st.session_state.context.get('background') == "Tinkering with ideas or on a break/exploration phase":
-            summary += (
-                f" You're exploring ideas, with a focus on: {st.session_state.context.get('tinkering_idea')}. "
-                f"Currently, you are in the '{st.session_state.context.get('startup_phase')}' phase."
-            )
+                st.session_state.context['reason'] = st.text_input("What brings you here?", key="reason")
 
-        # Display the summary
-        st.markdown(summary)
-        st.session_state.context['summary'] = summary  # Store summary to pass to OpenAI
+        elif background == "Tinkering with ideas or on a break/exploration phase":
+            tinkering_idea = st.text_input("What are you thinking about? Do you have an idea or specific area you'd like to work upon?", key="tinkering_idea")
+            if tinkering_idea:
+                st.session_state.context['tinkering_idea'] = tinkering_idea
+                startup_phase = st.selectbox(
+                    "Which phase are you currently in?", 
+                    ["Have a solid idea", "Have an MVP", "Setting up a company", "Looking for co-founders"],
+                    key="tinkering_phase"
+                )
+                st.session_state.context['startup_phase'] = startup_phase
 
-        # Button to start chat
-        if st.button("Start chatting with Chattie"):
-            st.session_state.step += 1
+        # Display summary immediately after information gathering
+        display_summary()
+
+# Function to construct and display the summary
+def display_summary():
+    summary = (
+        f"Hey {st.session_state.context['address']}, you mentioned that you're in the age range {st.session_state.context.get('age_range')} and "
+        f"have a professional background in {st.session_state.context.get('background')}."
+    )
+    
+    if st.session_state.context.get('background') in ["Working for a startup or small company", "Working for a mid or large size company"]:
+        if st.session_state.context.get('looking_to_start') == "Yes":
+            risk_tolerance = st.session_state.context.get('risk_tolerance', 'unknown')
+            summary += f" You're looking to start up with a risk tolerance of {risk_tolerance}."
+            
+            if risk_tolerance in ["Low", "Medium"]:
+                summary += f" You are keen on learning more about {st.session_state.context.get('interest_type')} before a full startup."
+            elif risk_tolerance == "High":
+                summary += (
+                    f" Your area of interest is {st.session_state.context.get('startup_area')}, "
+                    f"and you're in the {st.session_state.context.get('startup_phase')} phase."
+                )
+
+        else:
+            summary += f" You're here because: {st.session_state.context.get('reason')}."
+    
+    elif st.session_state.context.get('background') == "Tinkering with ideas or on a break/exploration phase":
+        summary += (
+            f" You're exploring ideas, with a focus on: {st.session_state.context.get('tinkering_idea')}. "
+            f"Currently, you are in the '{st.session_state.context.get('startup_phase')}' phase."
+        )
+
+    # Display the summary
+    st.markdown(summary)
+    st.session_state.context['summary'] = summary  # Store summary to pass to OpenAI
+
+    # Button to start chat
+    if st.button("Start chatting with Chattie"):
+        st.session_state.step += 1
 
 # Chat function
 def chat_with_chattie(pdf_text):
