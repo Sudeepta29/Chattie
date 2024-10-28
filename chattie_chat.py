@@ -65,7 +65,7 @@ def get_chattie_response(user_input, system_prompt, client_instance):
     looking_to_start = st.session_state.context.get('looking_to_start')
     risk_tolerance = st.session_state.context.get('risk_tolerance')
     
-     if background == "Working for a startup or small company" and looking_to_start == "Yes":
+    if background == "Working for a startup or small company" and looking_to_start == "Yes":
         if risk_tolerance in ["Low", "Medium"]:
             interest_type = st.session_state.context.get('interest_type', 'angel investing or a side hustle')
             system_prompt += (
