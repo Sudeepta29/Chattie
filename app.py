@@ -202,7 +202,7 @@ def display_summary():
 
     # Button to start chat
     if st.button("Start chatting with Chattie"):
-        st.session_state.step += 1
+        st.session_state.step = 5  # Directly set the step to 5 to proceed to the chat interface
 
 # Chat function
 def chat_with_chattie(pdf_text):
@@ -226,5 +226,5 @@ def chat_with_chattie(pdf_text):
 # Display initial context questions or chat
 if st.session_state.step < 5:
     user_context_questions()
-elif st.session_state.step >= 5:
+elif st.session_state.step == 5:
     chat_with_chattie(pdf_text)
