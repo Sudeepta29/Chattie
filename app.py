@@ -1,6 +1,10 @@
 
 import streamlit as st
-from chattie_chat import chat_with_chattie, pdf_text
+from chattie_chat import chat_with_chattie, extract_text_from_pdf  # Ensure correct import
+
+# Initialize PDF content once
+pdf_path = "Training_Chattie_responses.pdf"
+pdf_text = extract_text_from_pdf(pdf_path)  # Call function after import check
 
 
 # Inject custom CSS to reduce the title font size
