@@ -108,7 +108,7 @@ def user_context_questions():
 
     # Step 4: Follow-up questions based on professional background
     elif st.session_state.step == 3:
-        background = st.session_state.context['background']
+        background = st.session_state.context.get('background', None)
         
         if background in ["Working for a startup or small company", "Working for a mid or large size company"]:
             st.session_state.context['looking_to_start'] = st.selectbox(
