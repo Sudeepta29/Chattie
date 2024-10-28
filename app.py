@@ -148,44 +148,37 @@ def user_context_questions():
                         )
                         st.session_state.context['startup_phase'] = startup_phase
 
-                        st.session_state.context['summary'] = (
-                            f"Hey {st.session_state.context['address']}, you mentioned that you're working in a {background} and are keen on starting up "
-                            f"with a high risk tolerance. You are interested in the area of {startup_area} and are currently in the {startup_phase} phase."
-                        )
-                        if st.button("Display Summary"):
-                            st.session_state.step += 1
-
-            else:
-                st.session_state.context['reason'] = st.text_input("What brings you here?", key="reason")
-                st.session_state.context['summary'] = f"Hey {st.session_state.context['address']}, you mentioned that you're here because: {st.session_state.context['reason']}."
-                if st.button("Display Summary"):
-                    st.session_state.step += 1
-
-        elif background == "Tinkering with ideas or on a break/exploration phase":
-            st.write("What are you thinking about? Do you have an idea or specific area you'd like to work upon?")
-            tinkering_idea = st.text_input("Please describe your idea or concept:", key="tinkering_idea")
-
-            if tinkering_idea:
-                st.session_state.context['tinkering_idea'] = tinkering_idea
-
-                # Now ask the phase question directly
-                startup_phase = st.selectbox(
-                    "Which phase are you currently in?", 
-                    ["Have a solid idea", "Have an MVP", "Setting up a company", "Looking for co-founders"],
-                    key="tinkering_phase"
-                )
-                st.session_state.context['startup_phase'] = startup_phase
-
-                # Construct the summary once both responses are available
-                st.session_state.context['summary'] = (
-                    f"You're exploring ideas with an interest in: {tinkering_idea}. "
-                    f"Currently, you are in the '{startup_phase}' phase."
-                )
-                st.session_state.step += 1  # Move to summary step automatically
+                       # Move to summary step after all information is gathered
+        if st.button("Next"):
+            st.session_state.step += 1
 
     elif st.session_state.step == 4:
-        # Display the summary message just before the chat
-        st.markdown(st.session_state.context['summary'])
+        # Construct the full summary with all collected information
+        summary = (
+            f"Hey {st.session_state.context['address']}, you mentioned that you're in the age range {st.session_state.context.get('age_range')} and "
+            f"have a professional background in {st.session_state.context.get('background')}."
+        )
+        
+        if st.session_state.context.get('background') in ["Working for a startup or small company", "Working for a mid or large size company"]:
+            if st.session_state.context.get('looking_to_start') == "Yes":
+                risk_tolerance = st.session_state.context.get('risk_tolerance', 'unknown')
+                summary += f" You're looking to start up with a risk tolerance of {risk_tolerance}."
+                if risk_tolerance == "High":
+                    summary += f" Your area of interest is {st.session_state.context.get('startup_area')}, and you're in the {st.session_state.context.get('startup_phase')} phase."
+            else:
+                summary += f" You're here because: {st.session_state.context.get('reason')}."
+        
+        elif st.session_state.context.get('background') == "Tinkering with ideas or on a break/exploration phase":
+            summary += (
+                f" You're exploring ideas, with a focus on: {st.session_state.context.get('tinkering_idea')}. "
+                f"Currently, you are in the '{st.session_state.context.get('startup_phase')}' phase."
+            )
+
+        # Display the summary
+        st.markdown(summary)
+        st.session_state.context['summary'] = summary  # Store summary to pass to OpenAI
+
+        # Button to start chat
         if st.button("Start chatting with Chattie"):
             st.session_state.step += 1
 
