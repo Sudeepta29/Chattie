@@ -148,86 +148,49 @@ def user_context_questions():
                         )
                         st.session_state.context['startup_phase'] = startup_phase
 
-                          # Final summary for high risk tolerance
                         st.session_state.context['summary'] = (
                             f"Hey {st.session_state.context['address']}, you mentioned that you're working in a {background} and are keen on starting up "
                             f"with a high risk tolerance. You are interested in the area of {startup_area} and are currently in the {startup_phase} phase."
                         )
-                        if st.button("Start chatting with Chattie"):
+                        if st.button("Display Summary"):
                             st.session_state.step += 1
 
             else:
                 st.session_state.context['reason'] = st.text_input("What brings you here?", key="reason")
-                if st.button("Start chatting with Chattie"):
-                    st.session_state.step += 1           
+                st.session_state.context['summary'] = f"Hey {st.session_state.context['address']}, you mentioned that you're here because: {st.session_state.context['reason']}."
+                if st.button("Display Summary"):
+                    st.session_state.step += 1
 
         elif background == "Tinkering with ideas or on a break/exploration phase":
-                st.write("What are you thinking about? Do you have an idea or specific area you'd like to work upon?")
-                tinkering_idea = st.text_input("Please describe your idea or concept:", key="tinkering_idea")
-                st.session_state.context['tinkering_idea'] = tinkering_idea
-        
-        if st.button("Next", key="next_3"):
-            st.session_state.step += 1
-
-    elif st.session_state.context['risk_tolerance'] == "High":
-        st.write("Since you have indicated a high risk tolerance, which area are you keen on starting up?")
-        startup_area = st.text_input("Please type in the area you are interested in:")
-    
-        if startup_area:
-            st.session_state.context['startup_area'] = startup_area
-            startup_phase = st.selectbox(
-            "Which phase of starting up are you in?", 
-            ["Have a solid idea", "Have an MVP", "Setting up a company", "Looking for co-founders"]
-        )
-        st.session_state.context['startup_phase'] = startup_phase
-
-    elif st.session_state.context.get('looking_to_start') == "No":
-        st.session_state.context['reason'] = st.text_input("What brings you here?", key="reason_1")
-
-    elif background == "Tinkering with ideas or on a break/exploration phase":
-        st.write("What are you thinking about? Do you have an idea or a concept or specific area you would like to work upon?")
-        tinkering_idea = st.text_input("Please describe your idea or concept:")
-            
-        if tinkering_idea:
+            st.write("What are you thinking about? Do you have an idea or specific area you'd like to work upon?")
+            tinkering_idea = st.text_input("Please describe your idea or concept:", key="tinkering_idea")
             st.session_state.context['tinkering_idea'] = tinkering_idea
+            st.session_state.context['summary'] = f"You're exploring ideas and described your concept as: {tinkering_idea}."
+            
+            if st.button("Display Summary"):
+                st.session_state.step += 1
 
-        if st.button("Next", key="next_4"):
-            st.session_state.step += 1
+# Chat function
+def chat_with_chattie(pdf_text):
+    user_input = st.text_input("Ask Chattie here...")
+    if st.button("Send"):
+        st.session_state.chat_history.append({"user": user_input})
+        pdf_response = extract_text_from_pdf(pdf_text)
+        if pdf_response:
+            response = pdf_response
+        else:
+            system_prompt = st.session_state.context['summary']
+            response = get_chattie_response(user_input, system_prompt)
+        st.session_state.chat_history.append({"chattie": response})
 
-     # Final Step: Display summary before starting chat
-    elif st.session_state.step == 4:
-        address = st.session_state.context.get('address', 'there')
-        age_range = st.session_state.context.get('age_range', 'unknown')
-        background = st.session_state.context.get('background', 'unspecified')
+    for chat in st.session_state.chat_history:
+        if "user" in chat:
+            st.markdown(f"**You:** {chat['user']}")
+        if "chattie" in chat:
+            st.markdown(f"**Chattie:** {chat['chattie']}")
 
-        # Construct summary message
-        summary_message = f"Hey {address}, you mentioned that you're in the age range {age_range} and your background is {background}."
-        
-        if background in ["Working for a startup or small company", "Working for a mid or large size company"]:
-            looking_to_start = st.session_state.context.get('looking_to_start', 'unspecified')
-            if looking_to_start == "Yes":
-                risk_tolerance = st.session_state.context.get('risk_tolerance', 'unspecified')
-                summary_message += f" You are looking to start up, with a risk tolerance of {risk_tolerance.lower()}."
-            else:
-                reason = st.session_state.context.get('reason', 'unspecified')
-                summary_message += f" You're here because: {reason.lower()}."
-
-        elif background == "Tinkering with ideas or on a break/exploration phase":
-            tinkering_idea = st.session_state.context.get('tinkering_idea', 'an unspecified concept')
-            summary_message += f" You're exploring ideas and described your concept as: {tinkering_idea}."
-
-        # Display the summary
-        st.markdown(summary_message)
-
-        # Button to start chat
-        if st.button("Start chatting with Chattie"):
-            st.session_state.step += 1
-
-# Display the initial context questions if not completed
+# Display initial context questions or chat
 if st.session_state.step < 5:
     user_context_questions()
-
-# Only show the main chat once the user context questions and summary are completed
-if st.session_state.step >= 5:
-    chat_with_chattie(pdf_text)        
-          
+elif st.session_state.step >= 5:
+    chat_with_chattie(pdf_text)
