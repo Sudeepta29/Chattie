@@ -61,31 +61,43 @@ def get_chattie_response(user_input, user_context, client_instance):
         f"The user is named {user_context.get('address', 'there')}, is in the age range {user_context.get('age_range', 'unknown')}, "
         f"and has a professional background in {user_context.get('background', 'an unspecified field')}."
     )
-    # Refined system prompt building logic for aspiring founders and explorers
-    if user_context.get('background') == "Working for a startup or small company" and user_context.get('looking_to_start') == "Yes":
-        # Check risk tolerance level and adjust prompt accordingly
-        risk_tolerance = user_context.get('risk_tolerance', 'unspecified')
+    # Refined prompt logic based on user's intentions
+    background = user_context.get('background')
+    looking_to_start = user_context.get('looking_to_start')
+    risk_tolerance = user_context.get('risk_tolerance')
+    
+    if background == "Working for a startup or small company" and looking_to_start == "Yes":
         if risk_tolerance in ["Low", "Medium"]:
-            system_prompt += " They are interested in starting up with a low or medium risk tolerance and might benefit from learning about angel investing or exploring ideas on the side."
+            interest_type = user_context.get('interest_type', 'angel investing or a side hustle')
+            system_prompt += (
+                f" They have a low to medium risk tolerance and are interested in exploring {interest_type} as a way to start up without full commitment."
+            )
         elif risk_tolerance == "High":
             startup_area = user_context.get('startup_area', 'an unspecified area')
             startup_phase = user_context.get('startup_phase', 'an unspecified phase')
-            system_prompt += f" They are interested in starting up in the area of {startup_area} and are currently in the {startup_phase} phase."
+            system_prompt += (
+                f" They are highly interested in starting up with a high risk tolerance, focusing on {startup_area} and currently in the {startup_phase} phase."
+            )
 
-    elif user_context.get('background') == "Working for a mid or large size company" and user_context.get('looking_to_start') == "Yes":
-        # Same handling for low/medium risk tolerance for mid/large company background
-        risk_tolerance = user_context.get('risk_tolerance', 'unspecified')
+    elif background == "Working for a mid or large size company" and looking_to_start == "Yes":
         if risk_tolerance in ["Low", "Medium"]:
-            system_prompt += " They are interested in starting up with a low or medium risk tolerance and might benefit from learning about angel investing or exploring ideas on the side."
+            interest_type = user_context.get('interest_type', 'angel investing or a side hustle')
+            system_prompt += (
+                f" They have a low to medium risk tolerance and are interested in exploring {interest_type} before a full startup commitment."
+            )
         elif risk_tolerance == "High":
             startup_area = user_context.get('startup_area', 'an unspecified area')
             startup_phase = user_context.get('startup_phase', 'an unspecified phase')
-            system_prompt += f" They are keen on starting up in the area of {startup_area} and are in the {startup_phase} phase."
+            system_prompt += (
+                f" With a high risk tolerance, they are focused on starting up in {startup_area} and are in the {startup_phase} phase."
+            )
 
-    elif user_context.get('background') == "Tinkering with ideas or on a break/exploration phase":
-        # Handle users exploring ideas or on a break
+    elif background == "Tinkering with ideas or on a break/exploration phase":
         tinkering_idea = user_context.get('tinkering_idea', 'an unspecified concept')
-        system_prompt += f" They are exploring ideas and have described their concept as: {tinkering_idea}."
+        startup_phase = user_context.get('startup_phase', 'an unspecified phase')
+        system_prompt += (
+            f" They are exploring ideas with an interest in {tinkering_idea}, currently in the {startup_phase} phase of development."
+        )
 
     try:
         response = client_instance.chat.completions.create(
