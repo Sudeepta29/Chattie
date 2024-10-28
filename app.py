@@ -205,17 +205,24 @@ def display_summary():
         st.session_state.step = 5  # Directly set the step to 5 to proceed to the chat interface
 
 # Chat function
+# Main Chat Function, avoiding re-calling PDF extraction
 def chat_with_chattie(pdf_text):
     user_input = st.text_input("Ask Chattie here...")
     if st.button("Send"):
         st.session_state.chat_history.append({"user": user_input})
-        pdf_response = extract_text_from_pdf(pdf_text)
+
+        # Use extract_relevant_text to find relevant PDF content, without re-opening the PDF file
+        pdf_response = extract_relevant_text(user_input, pdf_text)
         if pdf_response:
             response = pdf_response
         else:
-            system_prompt = st.session_state.context['summary']
+            # Use system prompt stored in session state for OpenAI
+            system_prompt = st.session_state.context.get('summary', "Default system context for OpenAI.")
             response = get_chattie_response(user_input, system_prompt)
+        
+        # Append the response to chat history
         st.session_state.chat_history.append({"chattie": response})
+
 
     for chat in st.session_state.chat_history:
         if "user" in chat:
