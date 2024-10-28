@@ -1,4 +1,4 @@
-
+import openai
 import streamlit as st
 from chattie_chat import chat_with_chattie, extract_text_from_pdf, extract_relevant_text, get_chattie_response
 # Initialize OpenAI client instance
