@@ -54,7 +54,7 @@ def extract_relevant_text(user_input, pdf_text, lines_to_extract=15):
     return None  # Return None if no partial match is found
 
 # Function to get a response from OpenAI if PDF search fails
-def get_chattie_response(user_input, user_context, client_instance):
+def get_chattie_response(user_input, system_prompt, client_instance):
     # Base system prompt
     system_prompt = (
         f"The user is named {user_context.get('address', 'there')}, is in the age range {user_context.get('age_range', 'unknown')}, "
