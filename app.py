@@ -164,10 +164,11 @@ def user_context_questions():
         elif background == "Tinkering with ideas or on a break/exploration phase":
             st.write("What are you thinking about? Do you have an idea or specific area you'd like to work upon?")
             tinkering_idea = st.text_input("Please describe your idea or concept:", key="tinkering_idea")
-            st.session_state.context['tinkering_idea'] = tinkering_idea
-             st.session_state.substep += 1  # Proceed to the next follow-up question
 
-            elif st.session_state.substep == 1:
+            if tinkering_idea:
+                st.session_state.context['tinkering_idea'] = tinkering_idea
+
+                # Now ask the phase question directly
                 startup_phase = st.selectbox(
                     "Which phase are you currently in?", 
                     ["Have a solid idea", "Have an MVP", "Setting up a company", "Looking for co-founders"],
@@ -175,11 +176,18 @@ def user_context_questions():
                 )
                 st.session_state.context['startup_phase'] = startup_phase
 
-                # Construct the summary
+                # Construct the summary once both responses are available
                 st.session_state.context['summary'] = (
-                    f"You're exploring ideas with an interest in: {st.session_state.context['tinkering_idea']}. "
+                    f"You're exploring ideas with an interest in: {tinkering_idea}. "
                     f"Currently, you are in the '{startup_phase}' phase."
                 )
+                st.session_state.step += 1  # Move to summary step automatically
+
+    elif st.session_state.step == 4:
+        # Display the summary message just before the chat
+        st.markdown(st.session_state.context['summary'])
+        if st.button("Start chatting with Chattie"):
+            st.session_state.step += 1
 
 # Chat function
 def chat_with_chattie(pdf_text):
