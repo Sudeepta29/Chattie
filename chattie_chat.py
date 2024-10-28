@@ -10,7 +10,7 @@ openai.api_key = open_ai_key
 # Assign the openai module to a client instance for consistency
 client_instance = openai
 pdf_path = "Training_Chattie_responses.pdf"
-
+pdf_text = extract_text_from_pdf(pdf_path)  # Extract text once
 
 # Function to extract text from PDF
 def extract_text_from_pdf(pdf_path):
