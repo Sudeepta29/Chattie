@@ -222,7 +222,7 @@ def chat_with_chattie(pdf_text):
         else:
             # Use system prompt stored in session state for OpenAI
             system_prompt = st.session_state.context.get('summary', "Default system context for OpenAI.")
-            response = get_chattie_response(user_input, system_prompt)
+            response = get_chattie_response(user_input, user_context, client_instance)
         
         # Append the response to chat history
         st.session_state.chat_history.append({"chattie": response})
